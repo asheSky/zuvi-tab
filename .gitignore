@@ -1,0 +1,15 @@
+# Build output
+.build/
+build/
+*.dSYM/
+
+# macOS / editors
+.DS_Store
+.swiftpm/
+*.xcodeproj/
+xcuserdata/
+
+# Never commit signing material
+*.p12
+*.pem
+*.cer
