@@ -1,0 +1,20 @@
+name: Build and privacy check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Liquid Glass APIs need the macOS 26 SDK.
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (release)
+        run: swift build -c release
+      - name: No networking APIs in the binary
+        run: scripts/check-no-network.sh .build/release/ZuviTab
