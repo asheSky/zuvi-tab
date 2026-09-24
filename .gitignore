@@ -13,3 +13,10 @@ xcuserdata/
 *.p12
 *.pem
 *.cer
+
+# Never commit credentials
+.env
+.env.*
+*client_secret*.json
+token.json
+*.credentials.json
