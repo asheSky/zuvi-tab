@@ -288,7 +288,10 @@ enum RemoteAX {
             withUnsafeBytes(of: elementID) { token.replaceSubrange(12..<20, with: $0) }
             guard let el = create(token as CFData)?.takeRetainedValue() else { continue }
             AXUIElementSetMessagingTimeout(el, 0.05)
-            guard let id = AX.windowID(el), search.contains(id), found[id] == nil else { continue }
+            guard let id = AX.windowID(el), search.contains(id), found[id] == nil,
+                  // Electron apps (Cursor, VS Code) expose a hidden AXUnknown element with the same window
+                  // number just before the real window; taking that one would drop the window.
+                  AX.string(el, kAXRoleAttribute) == kAXWindowRole else { continue }
             found[id] = el
             cache[id] = el
         }
